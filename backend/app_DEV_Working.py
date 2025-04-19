@@ -1,12 +1,10 @@
 from flask import Flask, jsonify, request, render_template, send_from_directory
 from flask_cors import CORS
-from dotenv import load_dotenv
 from openai import AzureOpenAI
 import openai
 import pandas as pd
 import sys
 import os
-
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from backend.retrospectives.generate_summary import generate_retro_summary
@@ -15,11 +13,6 @@ frontend_dir = os.path.join(os.path.dirname(__file__), "../frontend")
 
 app = Flask(__name__, static_folder=frontend_dir, static_url_path="")
 CORS(app)
-
-load_dotenv()
-azure_api_key = os.getenv("AZURE_API_KEY")
-azure_endpoint = os.getenv("AZURE_ENDPOINT")
-
 
 # Serve index.html from the frontend directory
 
@@ -34,8 +27,8 @@ df = pd.read_excel("data/retrospectives_data.xlsx")
 df.columns = df.columns.str.strip()
 
 client = AzureOpenAI(
-        api_key=azure_api_key,
-        azure_endpoint=azure_endpoint,
+        api_key="1buAtxqjk5jCgScFiEZ1zOuO4tNhPa82S7DuqFWgKwtppJlTEp0WJQQJ99BBACYeBjFXJ3w3AAABACOG19dA",
+        azure_endpoint="https://jagadishtestopenai2025.openai.azure.com",
         api_version="2024-03-01-preview"
          )
 @app.route("/")

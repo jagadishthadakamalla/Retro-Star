@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, render_template, send_from_directory
 from flask_cors import CORS
-from dotenv import load_dotenv
 from openai import AzureOpenAI
+from dotenv import load_dotenv
 import openai
 import pandas as pd
 import sys
@@ -17,9 +17,9 @@ app = Flask(__name__, static_folder=frontend_dir, static_url_path="")
 CORS(app)
 
 load_dotenv()
-azure_api_key = os.getenv("AZURE_API_KEY")
-azure_endpoint = os.getenv("AZURE_ENDPOINT")
-
+AZURE_API_KEY = os.getenv("AZURE_API_KEY")
+AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT")
+AZURE_API_VERSION = os.getenv("AZURE_API_VERSION")
 
 # Serve index.html from the frontend directory
 
@@ -34,9 +34,9 @@ df = pd.read_excel("data/retrospectives_data.xlsx")
 df.columns = df.columns.str.strip()
 
 client = AzureOpenAI(
-        api_key=azure_api_key,
-        azure_endpoint=azure_endpoint,
-        api_version="2024-03-01-preview"
+        api_key=AZURE_API_KEY,
+        azure_endpoint=AZURE_ENDPOINT,
+        api_version=AZURE_API_VERSION
          )
 @app.route("/")
 def serve_index():
