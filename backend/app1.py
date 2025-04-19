@@ -9,9 +9,10 @@ import os
 
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from backend.retrospectives.generate_summary import generate_retro_summary
+#from backend.retrospectives.generate_summary import generate_retro_summary
+from retrospectives.generate_summary import generate_retro_summary
+frontend_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frontend")
 
-frontend_dir = os.path.join(os.path.dirname(__file__), "../frontend")
 
 app = Flask(__name__, static_folder=frontend_dir, static_url_path="")
 CORS(app)
