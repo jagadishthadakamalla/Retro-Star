@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Retro-Star Assistant</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+padding: 20px;
+}
+#chat-box {
+border: 1px solid #ccc;
+padding: 10px;
+height: 300px;
+overflow-y: auto;
+margin-bottom: 10px;
+}
+.message {
+margin: 5px 0;
+}
+.user {
+font-weight: bold;
+color: #1d3557;
+}
+.bot {
+font-weight: bold;
+color: #e63946;
+}
+</style>
+</head>
+<body>
+<h1>Retro-Star AI Assistant</h1>
+<div id="chat-box"></div>
+<input type="text" id="user-input" placeholder="Ask a question..." style="width: 80%;" />
+<button onclick="sendMessage()">Send</button>
+
+<script>
+async function sendMessage() {
+const input = document.getElementById("user-input");
+const chatBox = document.getElementById("chat-box");
+const message = input.value.trim();
+if (!message) return;
+
+// Show user message
+chatBox.innerHTML += `<div class="message user">You: ${message}</div>`;
+input.value = "";
+
+const response = await fetch("/chat-query", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({ query: message })
+});
+const data = await response.json();
+
+// Show AI response
+chatBox.innerHTML += `<div class="message bot">AI: ${data.reply}</div>`;
+chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
+</body>
+</html>
